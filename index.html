@@ -41,11 +41,9 @@
   .header-inner { max-width: 720px; margin: 0 auto; padding: 0 14px; }
   .header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
   .header-icon {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--primary); color: #fff;
-    font-size: 17px; font-weight: 900;
-    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
     box-shadow: var(--raised-sm); flex-shrink: 0;
+    object-fit: contain; padding: 3px; background: var(--bg);
   }
   .header-top h1 { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: .01em; }
   .header-top h1 span { color: var(--primary); }
@@ -155,7 +153,7 @@
 <header>
   <div class="header-inner">
     <div class="header-top">
-      <div class="header-icon">P</div>
+      <img class="header-icon" src="patsfive.ico" alt="PATSFIVE">
       <h1>PATSFIVE <span>集客ダッシュボード</span> 2026-27</h1>
     </div>
     <div class="header-meta">
