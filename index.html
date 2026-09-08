@@ -141,6 +141,19 @@
 
   footer { text-align: center; font-size: 10px; color: var(--text-sub); padding: 16px 14px 0; letter-spacing: .04em; }
 
+  /* LINK CARDS */
+  .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .link-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; padding: 14px 10px;
+    background: var(--bg); box-shadow: var(--raised); border-radius: var(--r);
+    text-decoration: none; color: var(--text);
+    font-size: 12px; font-weight: 600; text-align: center;
+    border-top: 3px solid var(--primary);
+  }
+  .link-card:active { box-shadow: var(--inset); }
+  .link-card-icon { font-size: 22px; line-height: 1; }
+
   @media (min-width: 560px) {
     .stats-bar { grid-template-columns: repeat(4, 1fr); }
     .header-top h1 { font-size: 19px; }
@@ -181,6 +194,22 @@
     <div class="panel-h">📊 試合別 来場者数（バー＝実績・グレー＝予測 ／ ━＝目標）</div>
     <div class="panel-body">
       <div id="barChart"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-h">🔗 リンク</div>
+    <div class="panel-body">
+      <div class="link-grid">
+        <a class="link-card" href="https://patsfive.com/" target="_blank">
+          <span class="link-card-icon">🏀</span>
+          ホームページ
+        </a>
+        <a class="link-card" href="https://funatsu-daisuke-beep.github.io/patsfive-dashboard/" target="_blank">
+          <span class="link-card-icon">📊</span>
+          集客ダッシュボード
+        </a>
+      </div>
     </div>
   </div>
 
