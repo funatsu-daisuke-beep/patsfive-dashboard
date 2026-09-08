@@ -175,6 +175,22 @@
 </header>
 
 <div class="wrap">
+  <div class="panel" style="margin-bottom:16px;">
+    <div class="panel-h">🔗 リンク</div>
+    <div class="panel-body">
+      <div class="link-grid">
+        <a class="link-card" href="https://patsfive.com/" target="_blank">
+          <span class="link-card-icon">🏀</span>
+          ホームページ
+        </a>
+        <a class="link-card" id="scheduleLink" href="https://docs.google.com/spreadsheets/d/1_rJuVUcoesMSda6PI_VulQjAEeHqck0X6x4-ixKDxqg/edit" target="_blank">
+          <span class="link-card-icon">📅</span>
+          チームスケジュール
+        </a>
+      </div>
+    </div>
+  </div>
+
   <div class="stats-bar" id="summaryCards"></div>
 
   <div class="panel">
@@ -194,22 +210,6 @@
     <div class="panel-h">📊 試合別 来場者数（バー＝実績・グレー＝予測 ／ ━＝目標）</div>
     <div class="panel-body">
       <div id="barChart"></div>
-    </div>
-  </div>
-
-  <div class="panel">
-    <div class="panel-h">🔗 リンク</div>
-    <div class="panel-body">
-      <div class="link-grid">
-        <a class="link-card" href="https://patsfive.com/" target="_blank">
-          <span class="link-card-icon">🏀</span>
-          ホームページ
-        </a>
-        <a class="link-card" href="https://funatsu-daisuke-beep.github.io/patsfive-dashboard/" target="_blank">
-          <span class="link-card-icon">📊</span>
-          集客ダッシュボード
-        </a>
-      </div>
     </div>
   </div>
 
@@ -387,6 +387,23 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
 })();
 
 document.getElementById("footer").textContent=DATA.note;
+
+// チームスケジュール：当月のシートを開く
+// 各月タブのgidをURLのハッシュ(#gid=XXXXX)で確認して追記してください
+const SCHEDULE_GIDS = {
+  9:  0,  // 9月
+  10: 0,  // 10月
+  11: 0,  // 11月
+  12: 0,  // 12月
+  1:  0,  // 1月
+  2:  0,  // 2月
+  3:  0,  // 3月
+  4:  0,  // 4月
+};
+const _m = new Date().getMonth() + 1;
+const _gid = SCHEDULE_GIDS[_m] || 0;
+document.getElementById("scheduleLink").href =
+  "https://docs.google.com/spreadsheets/d/1_rJuVUcoesMSda6PI_VulQjAEeHqck0X6x4-ixKDxqg/edit#gid=" + _gid;
 </script>
 
 </head>
