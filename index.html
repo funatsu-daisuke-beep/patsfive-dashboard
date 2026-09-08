@@ -389,21 +389,19 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
 document.getElementById("footer").textContent=DATA.note;
 
 // チームスケジュール：当月のシートを開く
-// 各月タブのgidをURLのハッシュ(#gid=XXXXX)で確認して追記してください
 const SCHEDULE_GIDS = {
-  9:  0,  // 9月
-  10: 0,  // 10月
-  11: 0,  // 11月
-  12: 0,  // 12月
-  1:  0,  // 1月
-  2:  0,  // 2月
-  3:  0,  // 3月
-  4:  0,  // 4月
+  7:  0,
+  8:  1926688037,
+  9:  1780063478,
+  10: 1785796025,
+  11: 1899380835,
+  12: 282782799,
 };
 const _m = new Date().getMonth() + 1;
-const _gid = SCHEDULE_GIDS[_m] || 0;
+const _gid = SCHEDULE_GIDS[_m];
 document.getElementById("scheduleLink").href =
-  "https://docs.google.com/spreadsheets/d/1_rJuVUcoesMSda6PI_VulQjAEeHqck0X6x4-ixKDxqg/edit#gid=" + _gid;
+  "https://docs.google.com/spreadsheets/d/1_rJuVUcoesMSda6PI_VulQjAEeHqck0X6x4-ixKDxqg/edit" +
+  (_gid != null ? "#gid=" + _gid : "");
 </script>
 
 </head>
