@@ -151,33 +151,9 @@
 
   footer { text-align: center; font-size: 10px; color: var(--text-dim); padding: 16px 14px 0; letter-spacing: .04em; }
 
-  /* LINK CARDS */
-  .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .link-card {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 8px; padding: 18px 10px 14px;
-    background: var(--bg); box-shadow: var(--raised); border-radius: var(--r);
-    text-decoration: none; color: var(--text);
-    font-size: 12px; font-weight: 700; text-align: center;
-    position: relative; overflow: hidden;
-  }
-  .link-card::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--primary-light));
-  }
-  .link-card:active { box-shadow: var(--inset); }
-  .link-card-icon {
-    font-size: 22px; line-height: 1;
-    width: 44px; height: 44px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--bg); border-radius: 50%;
-    box-shadow: var(--raised-sm);
-  }
-
   @media (min-width: 560px) {
     .stats-bar { grid-template-columns: repeat(4, 1fr); }
     .header-top h1 { font-size: 19px; }
-    .link-grid { grid-template-columns: repeat(4, 1fr); }
   }
 </style>
 
@@ -196,32 +172,6 @@
 </header>
 
 <div class="wrap">
-  <div class="panel" style="margin-bottom:16px;">
-    <div class="panel-h">🔗 クイックリンク</div>
-    <div class="panel-body">
-      <div class="link-grid">
-        <a class="link-card" href="https://patsfive.com/" target="_blank">
-          <span class="link-card-icon">🏀</span>
-          ホームページ
-        </a>
-        <a class="link-card" href="https://docs.google.com/forms/d/e/1FAIpQLSeRhQ9DbS1T_UoiF1B05-OaIRCKKvT2cjbTvmq3Grwr9jQWBw/viewform" target="_blank">
-          <span class="link-card-icon">📋</span>
-          申請フォーム
-        </a>
-        <a class="link-card" id="scheduleLink" href="https://docs.google.com/spreadsheets/d/1_rJuVUcoesMSda6PI_VulQjAEeHqck0X6x4-ixKDxqg/edit" target="_blank">
-          <span class="link-card-icon">📅</span>
-          チームスケジュール
-        </a>
-        <a class="link-card" href="https://docs.google.com/spreadsheets/d/1qjO6yArXyCCmCzLCLX1CHBA6cxPFFDg1/edit?gid=341808471#gid=341808471" target="_blank">
-          <span class="link-card-icon">📆</span>
-          運営カレンダー
-        </a>
-        <a class="link-card" href="https://xsion-service.com/yamaguchi_sangyou/login" target="_blank">
-          <span class="link-card-icon">📝</span>
-          コラボフロー
-        </a>
-      </div>
-    </div>
   </div>
 
   <div class="stats-bar" id="summaryCards"></div>
@@ -421,20 +371,6 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
 
 document.getElementById("footer").textContent=DATA.note;
 
-// チームスケジュール：当月のシートを開く
-const SCHEDULE_GIDS = {
-  7:  0,
-  8:  1926688037,
-  9:  1780063478,
-  10: 1785796025,
-  11: 1899380835,
-  12: 282782799,
-};
-const _m = new Date().getMonth() + 1;
-const _gid = SCHEDULE_GIDS[_m];
-document.getElementById("scheduleLink").href =
-  "https://docs.google.com/spreadsheets/d/1_rJuVUcoesMSda6PI_VulQjAEeHqck0X6x4-ixKDxqg/edit" +
-  (_gid != null ? "#gid=" + _gid : "");
 </script>
 
 </head>
