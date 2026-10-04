@@ -150,6 +150,11 @@
   .chip.key { background: var(--accent); color: #fff; border-color: var(--accent); border-radius: 999px; }
   .chip.nextlabel { background: var(--accent); color: #fff; border-color: var(--accent); border-radius: 999px; }
 
+  .rule-note { margin: 10px 0 14px; padding: 10px 12px; background: var(--bg-sub); border: 1px solid var(--line); border-radius: 8px; font-size: 12px; line-height: 1.6; color: var(--text); }
+  .rule-note .rn-h { font-weight: 700; margin-bottom: 4px; }
+  .rule-note ul { margin: 0; padding-left: 1.2em; }
+  .rule-note li { margin: 2px 0; }
+  .rule-note b { color: var(--accent); }
   .g-nums { display: flex; gap: 5px; }
   .g-num {
     flex: 1; text-align: center;
@@ -182,7 +187,7 @@
     </div>
     <div class="header-meta">
       <span class="pill-next" id="nextGame">--</span>
-      <span class="pill-ro">閲覧専用（実績入力は社内から）</span>
+      <span class="pill-ro">閲覧専用</span>
       <a class="pill-drive" href="https://drive.google.com/drive/folders/1XcwnnWFnJ6eXObI7U7v4KYpK-iojpBnl" target="_blank" rel="noopener">📁 データフォルダ</a>
       <span class="updated" id="updated"></span>
     </div>
@@ -192,7 +197,7 @@
 <div class="wrap">
 
   <div class="stats-bar" id="summaryCards"></div>
-  <div id="ruleNote" style="font-size:11px;color:var(--text-sub);margin:6px 2px 10px;"></div>
+  <div id="ruleNote" class="rule-note"></div>
 
   <div class="panel">
     <div class="panel-h">📈 累計推移</div>
@@ -283,7 +288,16 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
     {label:"目標達成試合", val:pl.length?hit:"--", unit:pl.length?"/ "+pl.length+"試合":"",
      sub:"判定は目標②（実績反映）"},
   ];
-  document.getElementById("ruleNote").textContent = R.remaining ? ("目標②＝目標①＋"+fmt(R.addPerGame)+"人／試合（終わった試合の不足 "+fmt(R.shortfall)+"人 ÷ 残り"+R.remaining+"試合、10の位に四捨五入）") : "";
+  document.getElementById("ruleNote").innerHTML =
+    '<div class="rn-h">目標の見方</div><ul>'+
+    '<li><b>目標①</b>：試合を消化する前に決めた、試合ごとの目標。全24試合の合計36,000人（平均1,500人）。'+
+    '開幕節は1,500人、ほかの試合も最低1,200人。</li>'+
+    '<li><b>目標②</b>：実績を踏まえた、今の目標。目標①に届かなかった人数（マイナスGAP）を残りの試合に均等に上乗せ。'+
+    (R.remaining ? 'いまは1試合あたり＋'+fmt(R.addPerGame)+'人（不足'+fmt(R.shortfall)+'人÷残り'+R.remaining+'試合）。' : '')+
+    '実績が目標①を上回ったときは目標①のまま。</li>'+
+    '<li><b>テールヘビー</b>：秋（10〜11月）は地域の行事が多く集客が弱いため目標を低めに、'+
+    '集客しやすい冬〜春（1〜3月）に高めに置いています。シーズン後半ほど目標が大きくなります。</li>'+
+    '<li>目標は10人単位（1の位を四捨五入）。判定（○△×）は目標②で行います。</li></ul>';
   document.getElementById("summaryCards").innerHTML = tiles.map(t =>
     '<div class="stat-tile">'+
       '<div class="stat-label">'+t.label+'</div>'+
