@@ -159,9 +159,10 @@
   .g-num {
     flex: 1; text-align: center;
     background: var(--bg-sub); border: 1px solid var(--line);
-    border-radius: 6px; padding: 5px 2px;
+    border-radius: 6px; padding: 5px 1px;
+    display: flex; flex-direction: column; justify-content: space-between;
   }
-  .g-num i { display: block; font-style: normal; font-size: 9px; color: var(--text-sub); margin-bottom: 2px; }
+  .g-num i { display: block; font-style: normal; font-size: 8px; line-height: 1.25; letter-spacing: -.02em; color: var(--text-sub); margin-bottom: 2px; }
   .g-num b { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--text); }
   .g-num b.dim { color: var(--text-sub); font-weight: normal; font-size: 13px; }
   .g-num b.gp { color: var(--green); }
@@ -205,7 +206,7 @@
       <div class="legend">
         <span><i class="lg" style="background:#E96003;"></i>目標①（通常・計36,000）</span>
         <span><i class="lg" style="background:#27AE60;"></i>実績</span>
-        <span><i class="lg" style="background:#ABABAB;"></i>予測（現状延長・地域与件込み）</span>
+        <span><i class="lg" style="background:#ABABAB;"></i>趨勢予測（地域与件込み）</span>
         <span><i class="lg" style="background:#C9C9D2;"></i>昨年同時期</span>
       </div>
       <div id="cumChart"></div>
@@ -213,7 +214,7 @@
   </div>
 
   <div class="panel">
-    <div class="panel-h">📊 試合別 来場者数（バー＝実績・グレー＝予測 ／ ━＝目標②）</div>
+    <div class="panel-h">📊 試合別 来場者数（バー＝実績・グレー＝趨勢予測 ／ ━＝目標②）</div>
     <div class="panel-body">
       <div id="barChart"></div>
     </div>
@@ -227,36 +228,36 @@
 
 <script>
 const DATA = {
-  "savedAt": "2026-10-04T21:52:54.000Z",
+  "savedAt": "2026-10-04T22:14:48.000Z",
   "savedBy": "船津",
   "season": "2026-27",
-  "note": "目標①＝試合消化前の目標（開幕節1,500、残り22試合は均等に1,500、合計36,000＝平均1,500）。目標②＝実績を踏まえた目標（マイナスGAPを残り試合に均等に上乗せ）。目標は10人単位。予測＝25-26実績の季節指数モデル×地域与件補正（昨季の同条件週末の実績差を半分反映、2026-10-04調査）。昨年＝最も日付が近い昨年週末の実績",
-  "rule": {"minTarget": 1200, "openingTarget": 1500, "shortfall": 366, "remaining": 22, "addPerGame": 20, "evenTarget": 1500},
+  "note": "目標①＝試合消化前の目標（開幕節1,500・下関開催2,000で固定、俵田の残り16試合は均等配分、合計36,000＝平均1,500、10人単位・端数は最終戦で調整）。目標②（不足数加味）＝目標①に届かなかった人数を残り試合に均等に上乗せした目標。GAP＝実績−目標②。趨勢予測＝25-26実績の季節指数モデル×地域与件補正（何もしない場合の予測）。昨年実績＝最も日付が近い昨年週末の実績",
+  "rule": {"minTarget": 1200, "openingTarget": 1500, "shortfall": 366, "remaining": 22, "addPerGame": 20, "evenTarget": 1310, "shimoTarget": 2000},
   "games": [
-    {"no":1,"setsu":"第1節","game":"G1","date":"2026-09-26","venue":"宇部","opp":"しながわシティ","key":true,"target1":1500,"target":1500,"pred":1150,"lastYear":1218,"actual":1310,"memo":"開幕戦。レノファ山口ホーム戦(9/26 14:00)と同日競合に注意／雨・勝利"},
-    {"no":2,"setsu":"第1節","game":"G2","date":"2026-09-27","venue":"宇部","opp":"しながわシティ","key":true,"target1":1500,"target":1500,"pred":1410,"lastYear":1256,"actual":1324,"memo":"雨・勝利"},
-    {"no":3,"setsu":"第3節","game":"G1","date":"2026-10-10","venue":"宇部","opp":"しながわシティ","key":false,"target1":1500,"target":1520,"pred":600,"lastYear":549,"actual":null,"memo":"スポーツの日3連休初日"},
-    {"no":4,"setsu":"第3節","game":"G2","date":"2026-10-11","venue":"宇部","opp":"しながわシティ","key":false,"target1":1500,"target":1520,"pred":770,"lastYear":738,"actual":null,"memo":"3連休中日"},
-    {"no":5,"setsu":"第6節","game":"G1","date":"2026-11-07","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1500,"target":1520,"pred":520,"lastYear":443,"actual":null,"memo":"宇部まつり(11/1見込み)の翌週"},
-    {"no":6,"setsu":"第6節","game":"G2","date":"2026-11-08","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1500,"target":1520,"pred":690,"lastYear":623,"actual":null,"memo":""},
-    {"no":7,"setsu":"第8節","game":"G1","date":"2026-11-28","venue":"下関","opp":"湘南ユナイテッドBC","key":true,"target1":1500,"target":1520,"pred":750,"lastYear":642,"actual":null,"memo":"下関初開催"},
-    {"no":8,"setsu":"第8節","game":"G2","date":"2026-11-29","venue":"下関","opp":"湘南ユナイテッドBC","key":false,"target1":1500,"target":1520,"pred":910,"lastYear":782,"actual":null,"memo":""},
-    {"no":9,"setsu":"第10節","game":"G1","date":"2026-12-19","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1500,"target":1520,"pred":700,"lastYear":601,"actual":null,"memo":"クリスマス前週末"},
-    {"no":10,"setsu":"第10節","game":"G2","date":"2026-12-20","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1500,"target":1520,"pred":950,"lastYear":913,"actual":null,"memo":""},
-    {"no":11,"setsu":"第12節","game":"G1","date":"2027-01-23","venue":"宇部","opp":"しながわシティ","key":false,"target1":1500,"target":1520,"pred":980,"lastYear":951,"actual":null,"memo":""},
-    {"no":12,"setsu":"第12節","game":"G2","date":"2027-01-24","venue":"宇部","opp":"しながわシティ","key":false,"target1":1500,"target":1520,"pred":1280,"lastYear":1428,"actual":null,"memo":""},
-    {"no":13,"setsu":"第14節","game":"G1","date":"2027-02-06","venue":"宇部","opp":"しながわシティ","key":false,"target1":1500,"target":1520,"pred":1010,"lastYear":1406,"actual":null,"memo":"昨年比較対象は下関開催"},
-    {"no":14,"setsu":"第14節","game":"G2","date":"2027-02-07","venue":"宇部","opp":"しながわシティ","key":false,"target1":1500,"target":1520,"pred":1240,"lastYear":1486,"actual":null,"memo":"昨年比較対象は下関開催"},
-    {"no":15,"setsu":"第15節","game":"G1","date":"2027-02-13","venue":"下関","opp":"ヴィアティン三重","key":true,"target1":1500,"target":1520,"pred":1260,"lastYear":1228,"actual":null,"memo":"下関第2弾"},
-    {"no":16,"setsu":"第15節","game":"G2","date":"2027-02-14","venue":"下関","opp":"ヴィアティン三重","key":false,"target1":1500,"target":1520,"pred":1530,"lastYear":1280,"actual":null,"memo":""},
-    {"no":17,"setsu":"第17節","game":"G1","date":"2027-02-27","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1500,"target":1520,"pred":1040,"lastYear":1228,"actual":null,"memo":""},
-    {"no":18,"setsu":"第17節","game":"G2","date":"2027-02-28","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1500,"target":1520,"pred":1240,"lastYear":1280,"actual":null,"memo":""},
-    {"no":19,"setsu":"第20節","game":"G1","date":"2027-03-27","venue":"下関","opp":"ヴィアティン三重","key":true,"target1":1500,"target":1520,"pred":1050,"lastYear":755,"actual":null,"memo":"春休み期間・下関第3弾"},
-    {"no":20,"setsu":"第20節","game":"G2","date":"2027-03-28","venue":"下関","opp":"ヴィアティン三重","key":false,"target1":1500,"target":1520,"pred":1250,"lastYear":829,"actual":null,"memo":""},
-    {"no":21,"setsu":"第22節","game":"G1","date":"2027-04-10","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1500,"target":1520,"pred":840,"lastYear":866,"actual":null,"memo":""},
-    {"no":22,"setsu":"第22節","game":"G2","date":"2027-04-11","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1500,"target":1520,"pred":990,"lastYear":964,"actual":null,"memo":""},
-    {"no":23,"setsu":"第23節","game":"G1","date":"2027-04-17","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1500,"target":1520,"pred":800,"lastYear":866,"actual":null,"memo":"レノファ山口ホーム戦と同週末の可能性"},
-    {"no":24,"setsu":"第23節","game":"G2","date":"2027-04-18","venue":"宇部","opp":"湘南ユナイテッドBC","key":true,"target1":1500,"target":1520,"pred":1080,"lastYear":964,"actual":null,"memo":"ホーム最終戦"}
+    {"no":1,"setsu":"第1節","game":"G1","date":"2026-09-26","venue":"宇部","opp":"しながわシティ","key":true,"target1":1500,"target":1500,"lastYear":1218,"pred":1150,"actual":1310,"memo":"開幕戦。レノファ山口ホーム戦(9/26 14:00)と同日競合に注意／雨・勝利"},
+    {"no":2,"setsu":"第1節","game":"G2","date":"2026-09-27","venue":"宇部","opp":"しながわシティ","key":true,"target1":1500,"target":1500,"lastYear":1256,"pred":1410,"actual":1324,"memo":"雨・勝利"},
+    {"no":3,"setsu":"第3節","game":"G1","date":"2026-10-10","venue":"宇部","opp":"しながわシティ","key":false,"target1":1310,"target":1330,"lastYear":549,"pred":600,"actual":null,"memo":"スポーツの日3連休初日"},
+    {"no":4,"setsu":"第3節","game":"G2","date":"2026-10-11","venue":"宇部","opp":"しながわシティ","key":false,"target1":1310,"target":1330,"lastYear":738,"pred":770,"actual":null,"memo":"3連休中日"},
+    {"no":5,"setsu":"第6節","game":"G1","date":"2026-11-07","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1310,"target":1330,"lastYear":443,"pred":520,"actual":null,"memo":"宇部まつり(11/1見込み)の翌週"},
+    {"no":6,"setsu":"第6節","game":"G2","date":"2026-11-08","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1310,"target":1330,"lastYear":623,"pred":690,"actual":null,"memo":""},
+    {"no":7,"setsu":"第8節","game":"G1","date":"2026-11-28","venue":"下関","opp":"湘南ユナイテッドBC","key":true,"target1":2000,"target":2020,"lastYear":642,"pred":750,"actual":null,"memo":"下関初開催"},
+    {"no":8,"setsu":"第8節","game":"G2","date":"2026-11-29","venue":"下関","opp":"湘南ユナイテッドBC","key":false,"target1":2000,"target":2020,"lastYear":782,"pred":910,"actual":null,"memo":""},
+    {"no":9,"setsu":"第10節","game":"G1","date":"2026-12-19","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1310,"target":1330,"lastYear":601,"pred":700,"actual":null,"memo":"クリスマス前週末"},
+    {"no":10,"setsu":"第10節","game":"G2","date":"2026-12-20","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1310,"target":1330,"lastYear":913,"pred":950,"actual":null,"memo":""},
+    {"no":11,"setsu":"第12節","game":"G1","date":"2027-01-23","venue":"宇部","opp":"しながわシティ","key":false,"target1":1310,"target":1330,"lastYear":951,"pred":980,"actual":null,"memo":""},
+    {"no":12,"setsu":"第12節","game":"G2","date":"2027-01-24","venue":"宇部","opp":"しながわシティ","key":false,"target1":1310,"target":1330,"lastYear":1428,"pred":1280,"actual":null,"memo":""},
+    {"no":13,"setsu":"第14節","game":"G1","date":"2027-02-06","venue":"宇部","opp":"しながわシティ","key":false,"target1":1310,"target":1330,"lastYear":1406,"pred":1010,"actual":null,"memo":"昨年比較対象は下関開催"},
+    {"no":14,"setsu":"第14節","game":"G2","date":"2027-02-07","venue":"宇部","opp":"しながわシティ","key":false,"target1":1310,"target":1330,"lastYear":1486,"pred":1240,"actual":null,"memo":"昨年比較対象は下関開催"},
+    {"no":15,"setsu":"第15節","game":"G1","date":"2027-02-13","venue":"下関","opp":"ヴィアティン三重","key":true,"target1":2000,"target":2020,"lastYear":1228,"pred":1260,"actual":null,"memo":"下関第2弾"},
+    {"no":16,"setsu":"第15節","game":"G2","date":"2027-02-14","venue":"下関","opp":"ヴィアティン三重","key":false,"target1":2000,"target":2020,"lastYear":1280,"pred":1530,"actual":null,"memo":""},
+    {"no":17,"setsu":"第17節","game":"G1","date":"2027-02-27","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1310,"target":1330,"lastYear":1228,"pred":1040,"actual":null,"memo":""},
+    {"no":18,"setsu":"第17節","game":"G2","date":"2027-02-28","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1310,"target":1330,"lastYear":1280,"pred":1240,"actual":null,"memo":""},
+    {"no":19,"setsu":"第20節","game":"G1","date":"2027-03-27","venue":"下関","opp":"ヴィアティン三重","key":true,"target1":2000,"target":2020,"lastYear":755,"pred":1050,"actual":null,"memo":"春休み期間・下関第3弾"},
+    {"no":20,"setsu":"第20節","game":"G2","date":"2027-03-28","venue":"下関","opp":"ヴィアティン三重","key":false,"target1":2000,"target":2020,"lastYear":829,"pred":1250,"actual":null,"memo":""},
+    {"no":21,"setsu":"第22節","game":"G1","date":"2027-04-10","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1310,"target":1330,"lastYear":866,"pred":840,"actual":null,"memo":""},
+    {"no":22,"setsu":"第22節","game":"G2","date":"2027-04-11","venue":"宇部","opp":"ヴィアティン三重","key":false,"target1":1310,"target":1330,"lastYear":964,"pred":990,"actual":null,"memo":""},
+    {"no":23,"setsu":"第23節","game":"G1","date":"2027-04-17","venue":"宇部","opp":"湘南ユナイテッドBC","key":false,"target1":1310,"target":1330,"lastYear":866,"pred":800,"actual":null,"memo":"レノファ山口ホーム戦と同週末の可能性"},
+    {"no":24,"setsu":"第23節","game":"G2","date":"2027-04-18","venue":"宇部","opp":"湘南ユナイテッドBC","key":true,"target1":1350,"target":1370,"lastYear":964,"pred":1080,"actual":null,"memo":"ホーム最終戦"}
   ]
 };
 
@@ -286,14 +287,16 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
      cls:avgA==null?"":(avgA>=1500?"ok":"ng"),
      sub:avgA==null?"実績入力後に表示":(avgA>=1500?"基準クリア中":"基準まであと"+fmt(1500-avgA)+"人")},
     {label:"目標達成試合", val:pl.length?hit:"--", unit:pl.length?"/ "+pl.length+"試合":"",
-     sub:"判定は目標②（実績反映）"},
+     sub:"判定は目標②（不足数加味）"},
   ];
   document.getElementById("ruleNote").innerHTML =
     '<div class="rn-h">目標の見方</div><ul>'+
-    '<li><b>目標①</b>：試合を消化する前に決めた目標。全24試合に均等に配分し、1試合'+fmt(R.evenTarget||1500)+'人（合計36,000人＝平均1,500人）。</li>'+
-    '<li><b>目標②</b>：実績を踏まえた、今の目標。目標①に届かなかった人数（マイナスGAP）を残りの試合に均等に上乗せ。'+
+    '<li><b>目標①</b>：試合を消化する前に決めた目標。開幕節は1,500人、下関開催は'+fmt(R.shimoTarget||2000)+'人で固定し、'+
+    '俵田の残り試合に均等配分（1試合'+fmt(R.evenTarget)+'人、端数はホーム最終戦で調整）。合計36,000人＝平均1,500人。</li>'+
+    '<li><b>目標②（不足数加味）</b>：実績を踏まえた、今の目標。目標①に届かなかった人数（マイナスGAP）を残りの試合に均等に上乗せ。'+
     (R.remaining ? 'いまは1試合あたり＋'+fmt(R.addPerGame)+'人（不足'+fmt(R.shortfall)+'人÷残り'+R.remaining+'試合）。' : '')+
     '実績が目標①を上回ったときは目標①のまま。</li>'+
+    '<li><b>GAP</b>＝実績−目標②。<b>趨勢予測</b>＝何もしない場合の予測（昨季実績×季節・地域の要因）。</li>'+
     '<li>目標は10人単位（1の位を四捨五入）。判定（○△×）は目標②で行います。</li></ul>';
   document.getElementById("summaryCards").innerHTML = tiles.map(t =>
     '<div class="stat-tile">'+
@@ -390,12 +393,12 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
     if(isNext) html+="<span class=\"chip nextlabel\">次戦</span>";
     html+="</div>";
     html+="<div class=\"g-nums\">";
-    html+="<div class=\"g-num\"><i>目標①</i><b class=\"dim\">"+fmt(g.target1)+"</b></div>";
-    html+="<div class=\"g-num\"><i>目標②</i><b>"+fmt(g.target)+"</b></div>";
-    html+="<div class=\"g-num\"><i>予測</i><b class=\"dim\">"+fmt(g.pred)+"</b></div>";
-    html+="<div class=\"g-num\"><i>昨年</i><b class=\"dim\">"+fmt(g.lastYear)+"</b></div>";
-    html+="<div class=\"g-num\"><i>実績</i><b>"+(done?fmt(g.actual):"<span style=\"color:#C8C8C8;font-weight:normal;\">未</span>")+"</b></div>";
-    html+="<div class=\"g-num\"><i>GAP</i><b class=\""+(gap==null?"":gap>=0?"gp":"gm")+"\">"+(gap==null?"--":(gap>=0?"+":"")+fmt(gap))+"</b></div>";
+    html+="<div class=\"g-num\"><i>目標①<br>&nbsp;</i><b class=\"dim\">"+fmt(g.target1)+"</b></div>";
+    html+="<div class=\"g-num\"><i>目標②<br>不足数加味</i><b>"+fmt(g.target)+"</b></div>";
+    html+="<div class=\"g-num\"><i>昨年<br>実績</i><b class=\"dim\">"+fmt(g.lastYear)+"</b></div>";
+    html+="<div class=\"g-num\"><i>趨勢<br>予測</i><b class=\"dim\">"+fmt(g.pred)+"</b></div>";
+    html+="<div class=\"g-num\"><i>実績<br>&nbsp;</i><b>"+(done?fmt(g.actual):"<span style=\"color:#C8C8C8;font-weight:normal;\">未</span>")+"</b></div>";
+    html+="<div class=\"g-num\"><i>GAP<br>対目標②</i><b class=\""+(gap==null?"":gap>=0?"gp":"gm")+"\">"+(gap==null?"--":(gap>=0?"+":"")+fmt(gap))+"</b></div>";
     html+="</div>";
     if(g.memo) html+="<div class=\"g-memo\">"+g.memo+"</div>";
     html+="</div>";
