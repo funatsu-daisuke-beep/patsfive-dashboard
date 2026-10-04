@@ -295,8 +295,8 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
     '<li><b>目標②</b>：実績を踏まえた、今の目標。目標①に届かなかった人数（マイナスGAP）を残りの試合に均等に上乗せ。'+
     (R.remaining ? 'いまは1試合あたり＋'+fmt(R.addPerGame)+'人（不足'+fmt(R.shortfall)+'人÷残り'+R.remaining+'試合）。' : '')+
     '実績が目標①を上回ったときは目標①のまま。</li>'+
-    '<li><b>テールヘビー</b>：秋（10〜11月）は地域の行事が多く集客が弱いため目標を低めに、'+
-    '集客しやすい冬〜春（1〜3月）に高めに置いています。シーズン後半ほど目標が大きくなります。</li>'+
+    '<li><b>テールヘビー</b>：集客対策をこれから段階的に実施していくため、'+
+    '対策の効果が積み上がるシーズン後半ほど目標を高く設定しています（秋は低め、冬〜春に高め）。</li>'+
     '<li>目標は10人単位（1の位を四捨五入）。判定（○△×）は目標②で行います。</li></ul>';
   document.getElementById("summaryCards").innerHTML = tiles.map(t =>
     '<div class="stat-tile">'+
