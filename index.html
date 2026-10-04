@@ -278,7 +278,7 @@ const nextGame = () => DATA.games.find(g => gdate(g) >= today && g.actual == nul
      cls:avgA==null?"":(avgA>=1500?"ok":"ng"),
      sub:avgA==null?"実績入力後に表示":(avgA>=1500?"基準クリア中":"基準まであと"+fmt(1500-avgA)+"人")},
     {label:"目標達成試合", val:pl.length?hit:"--", unit:pl.length?"/ "+pl.length+"試合":"",
-     sub:"重点2,000 ／ その他1,500"},
+     sub:"目標＝試合別の積み上げ（合計36,000）"},
   ];
   document.getElementById("summaryCards").innerHTML = tiles.map(t =>
     '<div class="stat-tile">'+
