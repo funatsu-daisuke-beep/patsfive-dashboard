@@ -76,19 +76,24 @@
   /* QUICK LINKS */
   .quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
   .quick-card {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--bg); border: 2px solid var(--accent); border-radius: var(--r);
-    padding: 13px 14px; text-decoration: none;
-    transition: background .18s;
+    display: flex; flex-direction: column;
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
+    text-decoration: none; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    transition: transform .2s, box-shadow .2s;
   }
-  .quick-card:hover { background: var(--accent); }
-  .quick-card:hover .qc-title, .quick-card:hover .qc-sub, .quick-card:hover .qc-arr { color: #fff; }
-  .qc-em { font-size: 22px; flex-shrink: 0; line-height: 1; }
-  .qc-body { flex: 1; min-width: 0; }
-  .qc-title { display: block; font-size: 13px; font-weight: 700; color: var(--head); line-height: 1.3; }
-  .qc-sub { display: block; font-size: 10px; color: var(--text-sub); margin-top: 2px; }
-  .qc-arr { font-size: 16px; color: var(--accent); flex-shrink: 0; transition: transform .18s; }
-  .quick-card:hover .qc-arr { transform: translateX(3px); }
+  .quick-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(233,96,3,.18); }
+  .qc-top { height: 5px; background: var(--accent); flex-shrink: 0; }
+  .qc-inner { padding: 12px 14px 10px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+  .qc-label { font-size: 9px; font-weight: 700; letter-spacing: .14em; color: var(--accent); }
+  .qc-title { font-size: 13px; font-weight: 700; color: var(--head); line-height: 1.35; }
+  .qc-foot {
+    padding: 8px 14px; border-top: 1px solid var(--line);
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .qc-arr { display: inline-block; transition: transform .2s; }
+  .quick-card:hover .qc-arr { transform: translateX(5px); }
 
   /* STATS */
   .stats-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
@@ -215,14 +220,20 @@
 
   <div class="quick-links">
     <a class="quick-card" href="https://docs.google.com/spreadsheets/d/1wZwbK--mQpazGt8ugHEbWRtsGmWhT-Erkkc9sCvShx0/edit?usp=sharing" target="_blank" rel="noopener">
-      <span class="qc-em">📊</span>
-      <span class="qc-body"><span class="qc-title">集客管理シート</span><span class="qc-sub">実績入力・目標管理</span></span>
-      <span class="qc-arr">→</span>
+      <div class="qc-top"></div>
+      <div class="qc-inner">
+        <span class="qc-label">SHEET</span>
+        <span class="qc-title">集客管理シート</span>
+      </div>
+      <div class="qc-foot"><span>実績入力・目標管理</span><span class="qc-arr">→</span></div>
     </a>
     <a class="quick-card" href="https://docs.google.com/spreadsheets/d/1i7lraAKF59dVVOM65rb4_-bMu4MTRW_nwiiRJmaIIBk/edit" target="_blank" rel="noopener">
-      <span class="qc-em">📋</span>
-      <span class="qc-body"><span class="qc-title">応募キャンペーン管理台帳</span><span class="qc-sub">2026シーズン</span></span>
-      <span class="qc-arr">→</span>
+      <div class="qc-top"></div>
+      <div class="qc-inner">
+        <span class="qc-label">CAMPAIGN</span>
+        <span class="qc-title">応募キャンペーン管理台帳</span>
+      </div>
+      <div class="qc-foot"><span>2026シーズン</span><span class="qc-arr">→</span></div>
     </a>
   </div>
 
