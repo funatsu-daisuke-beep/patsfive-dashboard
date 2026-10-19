@@ -73,6 +73,23 @@
   .pill-drive:hover { background: var(--accent); color: #fff; }
   .updated { font-size: 10px; color: var(--text-dim); width: 100%; margin-top: 2px; }
 
+  /* QUICK LINKS */
+  .quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .quick-card {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--bg); border: 2px solid var(--accent); border-radius: var(--r);
+    padding: 13px 14px; text-decoration: none;
+    transition: background .18s;
+  }
+  .quick-card:hover { background: var(--accent); }
+  .quick-card:hover .qc-title, .quick-card:hover .qc-sub, .quick-card:hover .qc-arr { color: #fff; }
+  .qc-em { font-size: 22px; flex-shrink: 0; line-height: 1; }
+  .qc-body { flex: 1; min-width: 0; }
+  .qc-title { display: block; font-size: 13px; font-weight: 700; color: var(--head); line-height: 1.3; }
+  .qc-sub { display: block; font-size: 10px; color: var(--text-sub); margin-top: 2px; }
+  .qc-arr { font-size: 16px; color: var(--accent); flex-shrink: 0; transition: transform .18s; }
+  .quick-card:hover .qc-arr { transform: translateX(3px); }
+
   /* STATS */
   .stats-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
   .stat-tile {
@@ -189,13 +206,25 @@
     <div class="header-meta">
       <span class="pill-next" id="nextGame">--</span>
       <span class="pill-ro">閲覧専用</span>
-<a class="pill-drive" href="https://docs.google.com/spreadsheets/d/1wZwbK--mQpazGt8ugHEbWRtsGmWhT-Erkkc9sCvShx0/edit?usp=sharing" target="_blank" rel="noopener">📊 集客管理シート</a>
       <span class="updated" id="updated"></span>
     </div>
   </div>
 </header>
 
 <div class="wrap">
+
+  <div class="quick-links">
+    <a class="quick-card" href="https://docs.google.com/spreadsheets/d/1wZwbK--mQpazGt8ugHEbWRtsGmWhT-Erkkc9sCvShx0/edit?usp=sharing" target="_blank" rel="noopener">
+      <span class="qc-em">📊</span>
+      <span class="qc-body"><span class="qc-title">集客管理シート</span><span class="qc-sub">実績入力・目標管理</span></span>
+      <span class="qc-arr">→</span>
+    </a>
+    <a class="quick-card" href="https://docs.google.com/spreadsheets/d/1i7lraAKF59dVVOM65rb4_-bMu4MTRW_nwiiRJmaIIBk/edit" target="_blank" rel="noopener">
+      <span class="qc-em">📋</span>
+      <span class="qc-body"><span class="qc-title">応募キャンペーン管理台帳</span><span class="qc-sub">2026シーズン</span></span>
+      <span class="qc-arr">→</span>
+    </a>
+  </div>
 
   <div class="stats-bar" id="summaryCards"></div>
   <div id="ruleNote" class="rule-note"></div>
